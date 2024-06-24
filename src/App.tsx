@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-
-
+import sun from "./assets/images/icon-sun.svg";
 
 interface Todo {
   id: number;
@@ -56,57 +55,65 @@ const App: React.FC = () => {
   });
 
   return (
-    <div className="app">
-      <header className="header">
-       
-        <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}>
-         
-        </button>
-      </header>
-      <div className="input-group">
-        <input
-          type="text"
-          placeholder="Currently typing "
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleAddTodo();
-            }
-          }}
-        />
+    <div className='main'>
+      <div className='sun'>
+        <img src={sun} alt="Sun icon" />
       </div>
-      <ul className="todo-list">
-        {filteredTodos.map(todo => (
-          <li key={todo.id} className={todo.completed ? 'completed' : ''}>
-            <label>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => handleToggleComplete(todo.id)}
-              />
-              <span
-                contentEditable
-                onBlur={(e) => handleUpdateTodo(todo.id, e.currentTarget.textContent || '')}
-                suppressContentEditableWarning={true}
-              >
-                {todo.text}
-              </span>
-            </label>
-            <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-      <div className="footer">
-        <span>{todos.filter(todo => !todo.completed).length} items left</span>
-        <div className="filters">
-          <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>All</button>
-          <button className={filter === 'active' ? 'active' : ''} onClick={() => setFilter('active')}>Active</button>
-          <button className={filter === 'completed' ? 'active' : ''} onClick={() => setFilter('completed')}>Completed</button>
+        
+      <div className="app">
+        <header className="header">
+          <button className="theme-toggle" onClick={() => setDarkMode(!darkMode)}></button>
+        </header>
+        
+        <h1>TO DO</h1>  {/* Added heading here */}
+        
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Currently typing"
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleAddTodo();
+              }
+            }}
+          />
         </div>
-        <button onClick={() => setTodos(todos.filter(todo => !todo.completed))}>
-          Clear Completed
-        </button>
+        
+        <ul className="todo-list">
+          {filteredTodos.map(todo => (
+            <li key={todo.id} className={todo.completed ? 'completed' : ''}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => handleToggleComplete(todo.id)}
+                />
+                <span
+                  contentEditable
+                  onBlur={(e) => handleUpdateTodo(todo.id, e.currentTarget.textContent || '')}
+                  suppressContentEditableWarning={true}
+                >
+                  {todo.text}
+                </span>
+              </label>
+              <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+        
+        <div className="footer">
+          <span>{todos.filter(todo => !todo.completed).length} items left</span>
+          <div className="filters">
+            <button className={filter === 'all' ? 'active' : ''} onClick={() => setFilter('all')}>All</button>
+            <button className={filter === 'active' ? 'active' : ''} onClick={() => setFilter('active')}>Active</button>
+            <button className={filter === 'completed' ? 'active' : ''} onClick={() => setFilter('completed')}>Completed</button>
+          </div>
+          <button onClick={() => setTodos(todos.filter(todo => !todo.completed))}>
+            Clear Completed
+          </button>
+        </div>
       </div>
     </div>
   );
